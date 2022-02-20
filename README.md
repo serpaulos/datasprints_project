@@ -1,98 +1,66 @@
 # Datasprint Desafio Tecnico
 
 
-> Desafio enviao por DataSprints ![Alt text](Image URL)
+> Desafio enviao por DataSprints <br>
+>![Alt text](logo.png)
 
 ## Tabela de Conteudos
 - [Informações Gerais](#Informações-Gerais)
 - [Tecnologias](#Tecnologias)
-- [Status do Projeto](#Status-do-Projeto)
 - [Melhorias](#melhorias)
-- [Reconhecimentos](#Reconhecimentos)
 - [Contato](#Contato)
 <!-- * [License](#license) -->
 
 
 ## Informações-Gerais 
-- Foi utilizado o conjunto de Dados: https://www.kaggle.com/olistbr/brazilian-ecommerce
-- O projeto trata da empresa brasileira de E-Commerce Olist. Uma startup brasileira que atua no segmento de e-commerce.
-- O desafio assumido pela equipe foi de desenhar um algoritimo em Machine Learning para Previsão de Vendas
-- Estou destacando neste documento a parte executada para o pipeline de dados e tarefas inerentes ao Engenheiro de Dados.
+- Foi utilizado o conjunto de Dados disponibilizado pela empresa com base nos dados da NYC Taxi Trips.
+    - data-sample_data-nyctaxi-trips-2009-json_corrigido.json
+    - data-sample_data-nyctaxi-trips-2010-json_corrigido.json
+    - data-sample_data-nyctaxi-trips-2011-json_corrigido.json
+    - data-sample_data-nyctaxi-trips-2012-json_corrigido.json
+    - data-payment_lookup-csv.csv
+    - data-vendor_lookup-csv.csv
+
+- O objetivo deste teste é avaliar sua proficiência nos requisitos básicos para nossa vaga:
+    - Programação básica com SQL
+    - Programação básica com Python
+    - Experiência com Cloud Computing
+    - Experiência com Linux
+    - Experiência com Data Science/Engineering
+    - Habilidades diferenciais :
+        - Habilidades em Análise de Grandes Volumes de Dados;
+        - Habilidades em construção de pipelines de dados.
+
+- Queremos que, a partir dos dados disponibilizados, você responda, de preferência com gráficos às seguintes questões
+    - 1. Qual a distância média percorrida por viagens com no máximo 2 passageiros;
+    - 2. Quais os 3 maiores vendors em quantidade total de dinheiro arrecadado;
+    - 3. Faça um histograma da distribuição mensal, nos 4 anos, de corridas pagas em dinheiro;
+    - 4. Faça um gráfico de série temporal contando a quantidade de gorjetas de cada dia, nos  últimos 3 meses de 2012.
 
 ## Tecnologias
 - Python
-- Pandas
-- Airflow
-- Docker (Docker compose)
-- Minio(S3)
 - Mysql
 
-## Status-do-Projeto
-Project is: _em desenvolivimento_
 
 # Detalhes-do-Projeto
 
-* Containers criados para o projeto utilizando Docker-compose
-    * Airflow(e dependencias)
-    * Mysql
-    * Spark
-    * Jupyter-notebook
-    * Minio
+* Os arquivos JSON foram convertidos para o fomato PARQUET por ser um arquivo de tamanho menor e melhor performance.
 
-* Estrutura das pastas utilizadas no projeto
-    * Airflow
-        * dags (pasta onde são armazenadas as dags do airflow)
-        * config (pasta para o arquivo airflow.cfg para configurações)
-        * data (para utlizada para manipulação de dados)
-        * logs (arquivos de log)
-        * plugins (possiveis plugins utlizados no airflow)
-        * parquet_saved (para utlizada para manipulação de dados)
-        * parquet_read (para utlizada para manipulação de dados)
-        * temp (para utlizada para manipulação de dados)
-    * Data_files
-        * data (pasta para armazenar dados de fontes diversas fora do datalake, como csv, json, etc. Para testes diversos) 
-        * dbs (pasta para armazenamento de arquivos relacionados com banco de dados como script de carga e criação de banco de dados)
-    * Datalake (onde serão salvos/replicados os buckets criados dentro do minio)
-    * Mysql-db (criada para salvar/persistir os dados do database na maquina(host docker) para não perder dados caso o container seja deletado ou tenha problema)
-    * Notebook (pasta para salvar os arquivos notebook do Jupyter criados para teste de conceito antes da implementação/automação no airflow)
-    * Postgres-data (criada para salvar/persistir os dados do database na maquina(host docker) para não perder dados caso o container seja deletado ou tenha problema)
+* Dentro do arquivo desafio.ipynb podem ser encontrados anotações e detalhes a respeito das etapas realizadas, dentre elas:
+    - importar as bibliotecas necessarias.
+        - pandas
+        - pyarrow
+        - datetime
+        - matplotlib
+        - seaborn
+        - folium
+        - numpy
+* Foi criada uma funcao para converter arquivos JSON de uma determinada pasta para o formato parquet, converte_parquet(), porem por ser necessario poucas comversões, foram feitas conversões manualmente
 
-- Script desenhado para criação da estrutura de pastas
-    * CriaPastas.bat (script para criação da estrutura de pastas, a pasta raiz para o projeto será stack_project)
-- Buckets criados no datalake MINIO para processamento
-    * Landing
-    * Processing
-    * Curated
-
-- Arquivos csv feito upload para bucket Landing utilizando script python
-    * olist_customers_dataset.csv
-    * olist_geolocation_dataset.csv
-    * olist_order_items_dataset.csv
-    * olist_order_payments_dataset.csv
-    * olist_order_reviews_dataset.csv
-    * olist_orders_dataset.csv
-    * olist_products_dataset.csv
-    * olist_sellers_dataset.csv
-    * product_category_name_translation.csv
-
-- Sequencia de processamento no jupyter notebook
-    * Executar os seguintes notebooks em order:
-        * move_files_to_bucket_landing.ipynb
-        * python_csv_to_parket.ipynb
-
-- Sequencia de processamento no airflow
-    * Executar os seguintes notebooks em order:
-        * carrega_dados_landing.py
-        * converte_csv_para_parquet.py
-
-## Melhorias
-Projeto ainda em desenvolivimento e como ainda estou aprendendo a utilizar diversas tecnologias, ainda tenho muito o que aprender e ainda existe muito espaço para melhorias.
-
-
-## Reconhecimentos
-- Este projeto foi sugerido por (https://stacktecnologias.com.br/)
-- Muito obrigado ao [@RodrigoSantana](https://www.linkedin.com/in/rodrigo-santana-ferreira-0ab041128/) e ao [@FelipeSantana](https://www.linkedin.com/in/felipesf/) por proporcionar este desafio ;)
-
+* Foi feita uma carga em banco de dados Mysql para teste e escrita de queries para consulta ao banco.
+    - A carga foi feita usando sqlalchemy, usando um dataframe consolidado de todos os outros criados manualmente, utilizando este  comando para a carga
+    - df_concat.to_sql('taxi_pickups', engine)
+* Arquivo Análise.html foi criado/incluido no repositorio com as respostas obtidas para as perguntas.
 
 ## Contato
-Criado por [@paulosilvajr](https://www.linkedin.com/in/paulosilvajr/) - fique a vontade para entrar em contato!
+Criado por [@paulosilvajr](https://www.linkedin.com/in/paulosilvajr/) - fique a vontade para entrar em contato! [sergiopaulosilvajr@gmail.com](sergiopaulosilvajr@gmail.com)
